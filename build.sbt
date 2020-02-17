@@ -21,7 +21,8 @@ inThisBuild(
       silencerPlugin,
       kindProjectorPlugin,
       betterMonadicForPlugin
-    ) ++ Seq(
+    ),
+    libraryDependencies ++= Seq(
       scalaTest,
       scalaCheck,
       scalaTestPlusCheck,
@@ -57,11 +58,7 @@ lazy val core = (project in file("core"))
     description := "My gorgeous core App",
     scalacOptions ++= scalacOptionsFor(scalaVersion.value),
     console / scalacOptions := removeScalacOptionXlintUnusedForConsoleFrom(scalacOptions.value),
-    libraryDependencies ++= Seq(
-      shapeless,
-      fs2Core,
-      fs2Io
-    )
+    libraryDependencies ++= Seq(shapeless, fs2Io)
   )
 
 lazy val `exploring-chimney` = (project in file("exploring-chimney"))
@@ -71,11 +68,23 @@ lazy val `exploring-chimney` = (project in file("exploring-chimney"))
     description := "Exploring chimney for case class manipulation",
     scalacOptions ++= scalacOptionsFor(scalaVersion.value),
     console / scalacOptions := removeScalacOptionXlintUnusedForConsoleFrom(scalacOptions.value),
-    libraryDependencies ++= Seq(
-      chimney,
-      fs2Core,
-      fs2Io
-    )
+    libraryDependencies ++= Seq(chimney)
+  )
+
+lazy val `exploring-monocle` = (project in file("exploring-monocle"))
+  .dependsOn(compat213, util)
+  .settings(
+    name := "exploring-monocle",
+    description := "Exploring optics library Monocle",
+    scalacOptions ++= scalacOptionsFor(scalaVersion.value),
+    console / scalacOptions := removeScalacOptionXlintUnusedForConsoleFrom(scalacOptions.value),
+    libraryDependencies ++= Seq(monocleMacro, monocleLaw),
+    libraryDependencies ++= {
+      if (scalaVersion.value.startsWith("2.13"))
+        Seq.empty // in 2.13 we add scalacOption: -Ymacro-annotations // see project/ScalacOptions.scala
+      else
+        Seq(macroParadise)
+    }
   )
 
 lazy val compat213 = (project in file("compat213"))

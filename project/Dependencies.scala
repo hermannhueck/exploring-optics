@@ -15,12 +15,13 @@ object Dependencies {
   lazy val scalaCheckShapelessVersion = "1.2.4"
   lazy val scalaCheckDatetimeVersion  = "0.3.2"
   lazy val seleniumVersion            = "3.141.59"
-  lazy val munitVersion               = "0.4.5"
+  lazy val munitVersion               = "0.5.0"
   lazy val minitestVersion            = "2.7.0"
   lazy val utestVersion               = "0.7.4"
   lazy val fansiVersion               = "0.2.9"
   lazy val pprintVersion              = "0.5.9"
   lazy val chimneyVersion             = "0.4.1"
+  lazy val monocleVersion             = "2.0.1"
 
   lazy val collectionCompat    = "org.scala-lang.modules"     %% "scala-collection-compat"     % collectionCompatVersion
   lazy val shapeless           = "com.chuusai"                %% "shapeless"                   % shapelessVersion
@@ -51,6 +52,9 @@ object Dependencies {
   lazy val fansi               = "com.lihaoyi"                %% "fansi"                       % fansiVersion
   lazy val pprint              = "com.lihaoyi"                %% "pprint"                      % pprintVersion
   lazy val chimney             = "io.scalaland"               %% "chimney"                     % chimneyVersion
+  lazy val monocleCore         = "com.github.julien-truffaut" %% "monocle-core"                % monocleVersion
+  lazy val monocleMacro        = "com.github.julien-truffaut" %% "monocle-macro"               % monocleVersion
+  lazy val monocleLaw          = "com.github.julien-truffaut" %% "monocle-law"                 % monocleVersion
 
   // compilerPlugins
   lazy val silencerVersion         = "1.4.4"
