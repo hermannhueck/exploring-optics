@@ -128,4 +128,25 @@ package object formatting {
   def printCyan(): Unit    = print(CYAN)
   def printMagenta(): Unit = print(MAGENTA)
   def printReset(): Unit   = print(RESET)
+
+  implicit class StringSyntax(private val what: String) extends AnyVal {
+
+    def boxed(width: Int = 80): String =
+      s"${line(width)}\n$what\n${line(width)}"
+
+    def colored(escape: String): String =
+      s"$escape$what${Console.RESET}"
+
+    def red: String =
+      what.colored(Console.RED)
+
+    def green: String =
+      what.colored(Console.GREEN)
+
+    def blue: String =
+      what.colored(Console.BLUE)
+
+    def reset: String =
+      what.colored(Console.RESET)
+  }
 }
