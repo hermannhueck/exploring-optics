@@ -78,7 +78,11 @@ lazy val `exploring-monocle` = (project in file("exploring-monocle"))
     description := "Exploring optics library Monocle",
     scalacOptions ++= scalacOptionsFor(scalaVersion.value),
     console / scalacOptions := removeScalacOptionXlintUnusedForConsoleFrom(scalacOptions.value),
-    libraryDependencies ++= Seq(monocleMacro, monocleLaw),
+    libraryDependencies ++= Seq(
+      monocleMacro,
+      monocleLaw,
+      alleycatsCore
+    ),
     libraryDependencies ++= {
       if (scalaVersion.value.startsWith("2.13"))
         Seq.empty // in 2.13 we add scalacOption: -Ymacro-annotations // see project/ScalacOptions.scala
