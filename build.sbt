@@ -81,6 +81,7 @@ lazy val `exploring-monocle` = (project in file("exploring-monocle"))
     libraryDependencies ++= Seq(
       monocleMacro,
       monocleLaw,
+      monocleUnsafe,
       alleycatsCore
     ),
     libraryDependencies ++= {

@@ -57,6 +57,7 @@ object Dependencies {
   lazy val monocleCore         = "com.github.julien-truffaut" %% "monocle-core"                % monocleVersion
   lazy val monocleMacro        = "com.github.julien-truffaut" %% "monocle-macro"               % monocleVersion
   lazy val monocleLaw          = "com.github.julien-truffaut" %% "monocle-law"                 % monocleVersion
+  lazy val monocleUnsafe       = "com.github.julien-truffaut" %% "monocle-unsafe"              % monocleVersion
 
   // compilerPlugins
   lazy val silencerVersion         = "1.4.4"
