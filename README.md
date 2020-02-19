@@ -1,4 +1,7 @@
-# PROJECT TITLE
+# Exploring Monocle ...
 
-PROJECT DESCRIPTION
+... and other data manipulation libraries:
 
+- chimney
+- Monocle
+- QuickLens
