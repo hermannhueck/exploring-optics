@@ -24,6 +24,7 @@ object Dependencies {
   lazy val pprintVersion              = "0.5.9"
   lazy val chimneyVersion             = "0.4.1"
   lazy val monocleVersion             = "2.0.1"
+  lazy val quicklensVersion           = "1.4.12"
 
   lazy val collectionCompat    = "org.scala-lang.modules"     %% "scala-collection-compat"     % collectionCompatVersion
   lazy val shapeless           = "com.chuusai"                %% "shapeless"                   % shapelessVersion
@@ -60,6 +61,7 @@ object Dependencies {
   lazy val monocleMacro        = "com.github.julien-truffaut" %% "monocle-macro"               % monocleVersion
   lazy val monocleLaw          = "com.github.julien-truffaut" %% "monocle-law"                 % monocleVersion
   lazy val monocleUnsafe       = "com.github.julien-truffaut" %% "monocle-unsafe"              % monocleVersion
+  lazy val quickLens           = "com.softwaremill.quicklens" %% "quicklens"                   % quicklensVersion
 
   // compilerPlugins
   lazy val silencerVersion         = "1.5.0"

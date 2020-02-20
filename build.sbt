@@ -65,7 +65,7 @@ lazy val `exploring-chimney` = (project in file("exploring-chimney"))
   .dependsOn(compat213, util)
   .settings(
     name := "exploring-chimney",
-    description := "Exploring chimney for case class manipulation",
+    description := "Exploring Chimney for case class manipulation",
     scalacOptions ++= scalacOptionsFor(scalaVersion.value),
     console / scalacOptions := removeScalacOptionXlintUnusedForConsoleFrom(scalacOptions.value),
     libraryDependencies ++= Seq(chimney)
@@ -93,6 +93,16 @@ lazy val `exploring-monocle` = (project in file("exploring-monocle"))
       else
         Seq(macroParadise)
     }
+  )
+
+lazy val `exploring-quicklens` = (project in file("exploring-quicklens"))
+  .dependsOn(compat213, util)
+  .settings(
+    name := "exploring-quicklens",
+    description := "Exploring QuickLencs for case class manipulation",
+    scalacOptions ++= scalacOptionsFor(scalaVersion.value),
+    console / scalacOptions := removeScalacOptionXlintUnusedForConsoleFrom(scalacOptions.value),
+    libraryDependencies ++= Seq(quickLens)
   )
 
 lazy val compat213 = (project in file("compat213"))
