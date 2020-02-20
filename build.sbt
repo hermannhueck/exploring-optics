@@ -44,7 +44,7 @@ inThisBuild(
 )
 
 lazy val root = (project in file("."))
-  .aggregate(core, `exploring-chimney`)
+  .aggregate(core, `exploring-chimney`, `exploring-monocle`, `exploring-quicklens`, `exploring-diffx`)
   .settings(
     name := projectName,
     description := projectDescription,
@@ -103,6 +103,19 @@ lazy val `exploring-quicklens` = (project in file("exploring-quicklens"))
     scalacOptions ++= scalacOptionsFor(scalaVersion.value),
     console / scalacOptions := removeScalacOptionXlintUnusedForConsoleFrom(scalacOptions.value),
     libraryDependencies ++= Seq(quickLens)
+  )
+
+lazy val `exploring-diffx` = (project in file("exploring-diffx"))
+  .dependsOn(compat213, util)
+  .settings(
+    name := "exploring-diffx",
+    description := "Exploring diffx for case class comparison",
+    scalacOptions ++= scalacOptionsFor(scalaVersion.value),
+    console / scalacOptions := removeScalacOptionXlintUnusedForConsoleFrom(scalacOptions.value),
+    libraryDependencies ++= Seq(
+      diffxCore,
+      diffxScalaTest
+    )
   )
 
 lazy val compat213 = (project in file("compat213"))
