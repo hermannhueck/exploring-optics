@@ -7,6 +7,7 @@ object Dependencies {
   lazy val catsVersion                = "2.1.1"
   lazy val catsEffectVersion          = "2.1.1"
   lazy val alleycatsVersion           = "2.1.0"
+  lazy val kittensVersion             = "2.0.0"
   lazy val fs2Version                 = "2.2.2"
   lazy val monixVersion               = "3.1.0"
   lazy val zioVersion                 = "1.0.0-RC17"
@@ -16,7 +17,7 @@ object Dependencies {
   lazy val scalaCheckShapelessVersion = "1.2.4"
   lazy val scalaCheckDatetimeVersion  = "0.3.2"
   lazy val seleniumVersion            = "3.141.59"
-  lazy val munitVersion               = "0.5.0"
+  lazy val munitVersion               = "0.5.2"
   lazy val minitestVersion            = "2.7.0"
   lazy val utestVersion               = "0.7.4"
   lazy val fansiVersion               = "0.2.9"
@@ -28,6 +29,7 @@ object Dependencies {
   lazy val shapeless           = "com.chuusai"                %% "shapeless"                   % shapelessVersion
   lazy val catsEffect          = "org.typelevel"              %% "cats-effect"                 % catsEffectVersion
   lazy val alleycatsCore       = "org.typelevel"              %% "alleycats-core"              % alleycatsVersion
+  lazy val kittensCore         = "org.typelevel"              %% "kittens"                     % kittensVersion
   lazy val fs2Core             = "co.fs2"                     %% "fs2-core"                    % fs2Version
   lazy val fs2Io               = "co.fs2"                     %% "fs2-io"                      % fs2Version
   lazy val monixExecution      = "io.monix"                   %% "monix-execution"             % monixVersion
@@ -60,7 +62,7 @@ object Dependencies {
   lazy val monocleUnsafe       = "com.github.julien-truffaut" %% "monocle-unsafe"              % monocleVersion
 
   // compilerPlugins
-  lazy val silencerVersion         = "1.4.4"
+  lazy val silencerVersion         = "1.5.0"
   lazy val kindProjectorVersion    = "0.11.0"
   lazy val betterMonadicForVersion = "0.3.1"
   lazy val macroParadiseVersion    = "2.1.1"

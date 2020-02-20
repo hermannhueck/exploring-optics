@@ -82,7 +82,10 @@ lazy val `exploring-monocle` = (project in file("exploring-monocle"))
       monocleMacro,
       monocleLaw,
       monocleUnsafe,
-      alleycatsCore
+      alleycatsCore,
+      kittensCore,
+      scalaCheck,
+      scalaCheckShapeless
     ),
     libraryDependencies ++= {
       if (scalaVersion.value.startsWith("2.13"))
