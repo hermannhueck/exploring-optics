@@ -44,7 +44,7 @@ object Ex01Iso extends util.App {
 
   stringToList.modify(_.tail)("Hello") pipe println
 
-  s"${line(10)} Iso List[Char] <-> String".green pipe println
+  s"${line(10)} Iso Generation".green pipe println
 
   case class MyString(s: String)
   case class Foo()
@@ -64,7 +64,22 @@ object Ex01Iso extends util.App {
   val unit2     = barToUnit.get(Bar) tap println
   val bar       = barToUnit.reverseGet(unit2) tap println
 
-  s"${line(10)} Iso Laws".green pipe println
+  val fields = GenIso.fields[Person]
+  fields.get(Person("John", 42)) pipe println
 
-  "TODO: IsoTests" pipe println
+  s"${line(10)} Checking Iso Laws".green pipe println
+
+  import monocle.law.discipline.IsoTests
+  import cats.derived.auto.eq._ // from kittens
+  import cats.instances.all._
+  import org.scalacheck.ScalacheckShapeless._
+
+  checkRules(IsoTests(personIsoTuple).all, "Iso", "personIsoTuple")
+  // checkRules(IsoTests(listToVector).all, "Iso", "listToVector")
+  // checkRules(IsoTests(vectorToList).all, "Iso", "vectorToList")
+  checkRules(IsoTests(stringToList).all, "Iso", "stringToList")
+  checkRules(IsoTests(mystringToString).all, "Iso", "mystringToString")
+  checkRules(IsoTests(barToUnit).all, "Iso", "barToUnit")
+  checkRules(IsoTests(fooToUnit).all, "Iso", "fooToUnit")
+  checkRules(IsoTests(fields).all, "Iso", "fields")
 }

@@ -95,5 +95,15 @@ object Ex03Prism extends util.App {
 
   s"${line(10)} Prism Laws".green pipe println
 
-  "TODO: PrismTests" pipe println
+  import monocle.law.discipline.PrismTests
+  import cats.derived.auto.eq._ // from kittens
+  import cats.instances.all._
+  import org.scalacheck.ScalacheckShapeless._
+
+  // checkRules(PrismTests(jStr).all, "Prism", "jStr") // TEST HANGS !!!
+  checkRules(PrismTests(doubleToInt).all, "Prism", "doubleToInt")
+  // checkRules(PrismTests(jNum).all, "Prism", "jNum") // TEST HANGS !!!
+  // checkRules(PrismTests(jInt).all, "Prism", "jInt") // TEST HANGS !!!
+  // checkRules(PrismTests(jNum2).all, "Prism", "jNum2") // TEST HANGS !!!
+  // checkRules(PrismTests(jNull).all, "Prism", "jNull") // TEST HANGS !!!
 }

@@ -55,5 +55,10 @@ object Ex04Optional extends util.App {
 
   s"${line(10)} Optional Laws".green pipe println
 
-  "TODO: OptionalTests" pipe println
+  import monocle.law.discipline.OptionalTests
+  import cats.derived.auto.eq._ // from kittens
+  import cats.instances.all._
+  import org.scalacheck.ScalacheckShapeless._
+
+  checkRules(OptionalTests(head).all, "Optional", "head")
 }

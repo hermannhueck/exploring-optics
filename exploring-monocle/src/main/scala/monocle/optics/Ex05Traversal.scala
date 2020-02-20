@@ -16,7 +16,7 @@ object Ex05Traversal extends util.App {
 
   val xs = List(1, 2, 3, 4, 5) tap println
 
-  val eachL = Traversal.fromTraverse[List, Int]
+  val eachL: Traversal[List[Int], Int] = Traversal.fromTraverse[List, Int]
   // eachL: monocle.Traversal[List[Int],Int] = monocle.PTraversal$$anon$5@70d25509
   eachL.set(0)(xs) pipe println
   // res0: List[Int] = List(0, 0, 0, 0, 0)
@@ -40,7 +40,7 @@ object Ex05Traversal extends util.App {
 
   case class Point(id: String, x: Int, y: Int)
 
-  val points = Traversal.apply2[Point, Int](_.x, _.y)((x, y, p) => p.copy(x = x, y = y))
+  val points: Traversal[Point, Int] = Traversal.apply2[Point, Int](_.x, _.y)((x, y, p) => p.copy(x = x, y = y))
 
   points.set(5)(Point("bottom-left", 0, 0)) pipe println
   // res6: Point = Point(bottom-left,5,5)
@@ -57,12 +57,12 @@ object Ex05Traversal extends util.App {
         s.map {
           case (k, v) =>
             k -> (if (predicate(k)) f(v) else v.pure[F])
-        }.sequence
+        }.sequence // sequence requires: alleycats.std.map._
     }
 
   val m = Map(1 -> "one", 2 -> "two", 3 -> "three", 4 -> "Four")
 
-  val filterEven = filterKey[Int, String](_ % 2 == 0)
+  val filterEven: Traversal[Map[Int, String], String] = filterKey[Int, String](_ % 2 == 0)
   // filterEven: monocle.Traversal[Map[Int,String],String] = $anon$1@622e88d7
 
   filterEven.modify(_.toUpperCase)(m) pipe println
@@ -70,5 +70,12 @@ object Ex05Traversal extends util.App {
 
   s"${line(10)} Traversal Laws".green pipe println
 
-  "TODO: TraversalTests" pipe println
+  import monocle.law.discipline.TraversalTests
+  import cats.derived.auto.eq._ // from kittens
+  import cats.implicits._
+  import org.scalacheck.ScalacheckShapeless._
+
+  checkRules(TraversalTests(eachL).all, "Traversal", "eachL")
+  checkRules(TraversalTests(points).all, "Traversal", "points")
+  checkRules(TraversalTests(filterEven).all, "Traversal", "filterEven")
 }

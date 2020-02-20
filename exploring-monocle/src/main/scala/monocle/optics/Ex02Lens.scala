@@ -119,5 +119,23 @@ object Ex02Lens extends util.App {
 
   s"${line(10)} Lens Laws".green pipe println
 
-  "TODO: LensTests" pipe println
+  import monocle.law.discipline.LensTests
+  import cats.derived.auto.eq._ // from kittens
+  import cats.instances.all._
+  import org.scalacheck.ScalacheckShapeless._
+
+  checkRules(LensTests(lensStreetNumber).all, "Lens", "lensStreetNumber")
+  checkRules(LensTests(lensStreetNumber2).all, "Lens", "lensStreetNumber2")
+  checkRules(LensTests(lensAddress).all, "Lens", "lensAddress")
+  checkRules(
+    LensTests((lensAddress composeLens lensStreetNumber2)).all,
+    "Lens",
+    "(lensAddress composeLens lensStreetNumber2)"
+  )
+  checkRules(LensTests(c).all, "Lens", "c")
+  checkRules(LensTests(b).all, "Lens", "b")
+  checkRules(LensTests(ageLens).all, "Lens", "ageLens")
+  checkRules(LensTests(GenLens[Person](_.address.streetName)).all, "Lens", "GenLens[Person](_.address.streetName)")
+  checkRules(LensTests(Point.x).all, "Lens", "Point.x")
+  checkRules(LensTests(Point.y).all, "Lens", "Point.y")
 }
