@@ -44,21 +44,11 @@ inThisBuild(
 )
 
 lazy val root = (project in file("."))
-  .aggregate(core, `exploring-chimney`, `exploring-monocle`, `exploring-quicklens`, `exploring-diffx`)
+  .aggregate(`exploring-chimney`, `exploring-monocle`, `exploring-quicklens`, `exploring-diffx`)
   .settings(
     name := projectName,
     description := projectDescription,
     crossScalaVersions := Seq.empty
-  )
-
-lazy val core = (project in file("core"))
-  .dependsOn(compat213, util)
-  .settings(
-    name := "core",
-    description := "My gorgeous core App",
-    scalacOptions ++= scalacOptionsFor(scalaVersion.value),
-    console / scalacOptions := removeScalacOptionXlintUnusedForConsoleFrom(scalacOptions.value),
-    libraryDependencies ++= Seq(shapeless, fs2Io)
   )
 
 lazy val `exploring-chimney` = (project in file("exploring-chimney"))
