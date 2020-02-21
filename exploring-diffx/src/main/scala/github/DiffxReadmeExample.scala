@@ -4,6 +4,10 @@ import scala.util.chaining._
 import util.formatting._
 import com.softwaremill.diffx._
 
+/*
+  See also:
+  https://github.com/softwaremill/diffx
+ */
 object DiffxReadmeExample extends util.App {
 
   sealed trait Parent
