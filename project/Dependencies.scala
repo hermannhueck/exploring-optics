@@ -2,30 +2,30 @@ import sbt._
 
 object Dependencies {
 
-  lazy val collectionCompatVersion    = "2.1.4"
+  lazy val collectionCompatVersion    = "2.1.6"
   lazy val shapelessVersion           = "2.3.3"
   lazy val catsVersion                = "2.1.1"
   lazy val catsEffectVersion          = "2.1.1"
-  lazy val alleycatsVersion           = "2.1.0"
-  lazy val kittensVersion             = "2.0.0"
+  lazy val alleycatsVersion           = "2.1.1"
+  lazy val kittensVersion             = "2.1.0"
   lazy val fs2Version                 = "2.2.2"
   lazy val monixVersion               = "3.1.0"
   lazy val zioVersion                 = "1.0.0-RC17"
-  lazy val scalaTestVersion           = "3.1.0"
+  lazy val scalaTestVersion           = "3.1.2"
   lazy val scalaMockVersion           = "4.4.0"
   lazy val scalaCheckVersion          = "1.14.3"
-  lazy val scalaCheckShapelessVersion = "1.2.4"
+  lazy val scalaCheckShapelessVersion = "1.2.5"
   lazy val scalaCheckDatetimeVersion  = "0.3.2"
   lazy val seleniumVersion            = "3.141.59"
-  lazy val munitVersion               = "0.5.2"
+  lazy val munitVersion               = "0.7.9"
   lazy val minitestVersion            = "2.7.0"
   lazy val utestVersion               = "0.7.4"
   lazy val fansiVersion               = "0.2.9"
   lazy val pprintVersion              = "0.5.9"
-  lazy val chimneyVersion             = "0.4.1"
-  lazy val monocleVersion             = "2.0.1"
-  lazy val quicklensVersion           = "1.4.12"
-  lazy val diffxVersion               = "0.3.17"
+  lazy val chimneyVersion             = "0.5.2"
+  lazy val monocleVersion             = "2.0.5"
+  lazy val quicklensVersion           = "1.6.0"
+  lazy val diffxVersion               = "0.3.28"
 
   lazy val collectionCompat    = "org.scala-lang.modules"     %% "scala-collection-compat"     % collectionCompatVersion
   lazy val shapeless           = "com.chuusai"                %% "shapeless"                   % shapelessVersion
@@ -67,7 +67,7 @@ object Dependencies {
   lazy val diffxScalaTest      = "com.softwaremill.diffx"     %% "diffx-scalatest"             % diffxVersion
 
   // compilerPlugins
-  lazy val silencerVersion         = "1.5.0"
+  lazy val silencerVersion         = "1.6.0"
   lazy val kindProjectorVersion    = "0.11.0"
   lazy val betterMonadicForVersion = "0.3.1"
   lazy val macroParadiseVersion    = "2.1.1"
