@@ -105,6 +105,8 @@ package object formatting {
   ): String =
     line(width, "", "", fill)
 
+  def dash10 = dash(10)
+
   def objectNameSimple(scalaObject: java.lang.Object): String = {
     val cn = scalaObject.getClass.getSimpleName
     cn.substring(0, cn.length() - 1)
@@ -145,6 +147,15 @@ package object formatting {
 
     def blue: String =
       what.colored(Console.BLUE)
+
+    def yellow: String =
+      what.colored(Console.YELLOW)
+
+    def magenta: String =
+      what.colored(Console.MAGENTA)
+
+    def cyan: String =
+      what.colored(Console.CYAN)
 
     def reset: String =
       what.colored(Console.RESET)
