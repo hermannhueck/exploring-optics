@@ -32,7 +32,7 @@ object DiffxReadmeExample extends util.App {
 
   {
     s"${line(10)} diffing a1 and a2, ignoring field 'id':".green pipe println
-    implicit val diffA: Derived[Diff[A]] = Derived(Diff.gen[A].value.ignore(_.id))
+    implicit val diffA: Derived[Diff[A]] = Derived(Diff.gen[A].value.ignore((x: A) => x.id))
     Diff[Parent]
       .apply(a1, a2)
       .ensuring(_.isIdentical) pipe println
