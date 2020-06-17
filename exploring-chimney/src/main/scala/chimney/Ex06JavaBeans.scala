@@ -3,10 +3,11 @@ package chimney
 import io.scalaland.chimney.dsl._
 import io.scalaland.chimney.Transformer
 import scala.util.chaining._
+import util.formatting._
 
-object Ex15JavaBeans extends util.App {
+object Ex06JavaBeans extends util.App {
 
-  "\n----- Reading from Java beans" pipe println
+  s"$dash10 Reading from Java beans $dash10".magenta pipe println
 
   class MyBean1(private var id: Long, private var name: String, private var flag: Boolean) {
     def getId: Long     = id
@@ -29,7 +30,7 @@ object Ex15JavaBeans extends util.App {
     .pipe(println)
   //  MyCaseClass(1L, "beanie", true)
 
-  "\n----- Writing to Java beans" pipe println
+  s"$dash10 Writing to Java beans $dash10".magenta pipe println
 
   class MyBean2 {
     private var id: Long      = _
