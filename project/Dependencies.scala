@@ -67,7 +67,7 @@ object Dependencies {
   lazy val diffxScalaTest      = "com.softwaremill.diffx"     %% "diffx-scalatest"             % diffxVersion
 
   // compilerPlugins
-  lazy val silencerVersion         = "1.6.0"
+  lazy val silencerVersion         = "1.7.0"
   lazy val kindProjectorVersion    = "0.11.0"
   lazy val betterMonadicForVersion = "0.3.1"
   lazy val macroParadiseVersion    = "2.1.1"
