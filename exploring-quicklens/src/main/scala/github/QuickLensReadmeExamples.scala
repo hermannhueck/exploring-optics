@@ -3,6 +3,7 @@ package github
 import scala.util.chaining._
 import util.formatting._
 import com.softwaremill.quicklens._
+import scala.util.Try
 
 object QuickLensReadmeExamples extends util.App {
 
@@ -96,6 +97,14 @@ object QuickLensReadmeExamples extends util.App {
 
   "Modify specific sequence elements using .at:" pipe printSubTitle
 
+  "-- Modify Address at illegal index 2:" pipe println
+  Try {
+    person3
+      .modify(_.addresses.at(2).street.each.name)
+      .using(_.toUpperCase)
+  } pipe println
+
+  "-- Modify Address at legal index 1:" pipe println
   person3
     .modify(_.addresses.at(1).street.each.name)
     .using(_.toUpperCase) pipe println
@@ -112,7 +121,33 @@ object QuickLensReadmeExamples extends util.App {
 
   person4
     .modify(_.props.at("Age").value)
-    .setTo("45") pipe println
+    .setTo("46") pipe println
+
+  Try {
+    person4
+      .modify(_.props.at("AgeXXX").value)
+      .setTo("46")
+  } pipe println
+
+  "Modify specific map elements using .index:" pipe printSubTitle
+
+  person4
+    .modify(_.props.index("Age").value)
+    .setTo("46") pipe println
+
+  person4
+    .modify(_.props.index("AgeXXX").value)
+    .setTo("46") pipe println
+
+  "Modify specific elements in an option or map with a fallback using .atOrElse:" pipe printSubTitle
+
+  person4
+    .modify(_.props.atOrElse("NumReports", Property("0")).value)
+    .setTo("5") pipe println
+
+  person3
+    .modify(_.addresses.at(1).street.atOrElse(Street3("main street")).name)
+    .using(_.toUpperCase) pipe println
 
   "Modify Either fields using .eachLeft and eachRight:" pipe printSubTitle
 
