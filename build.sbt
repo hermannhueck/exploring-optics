@@ -5,8 +5,7 @@ val projectName        = "Exploring Optics"
 val projectDescription = "Exploring Optics"
 val projectVersion     = "0.2.0"
 
-val scala213               = "2.13.11"
-val supportedScalaVersions = List(scala212, scala213)
+val scala213 = "2.13.11"
 
 inThisBuild(
   Seq(
