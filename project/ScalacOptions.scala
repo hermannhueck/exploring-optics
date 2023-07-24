@@ -48,7 +48,7 @@ object ScalacOptions {
     )
 
   def scalacOptionsFor(scalaVersion: String): Seq[String] = {
-    println(s"\n>>>>>          compiling for Scala $scalaVersion\n")
+    // println(s"\n>>>>>          compiling for Scala $scalaVersion\n")
     CrossVersion.partialVersion(scalaVersion) match {
       case Some((2, minor)) if minor >= 13 =>
         scalacOptions213

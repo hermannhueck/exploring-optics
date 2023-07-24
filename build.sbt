@@ -3,38 +3,26 @@ import ScalacOptions._
 
 val projectName        = "Exploring Optics"
 val projectDescription = "Exploring Optics"
-val projectVersion     = "0.1.0"
+val projectVersion     = "0.2.0"
 
-val scala212               = "2.12.11"
-val scala213               = "2.13.2"
+val scala213               = "2.13.11"
 val supportedScalaVersions = List(scala212, scala213)
 
 inThisBuild(
   Seq(
     version := projectVersion,
     scalaVersion := scala213,
-    crossScalaVersions := supportedScalaVersions,
     publish / skip := true,
     libraryDependencies ++= Seq(
-      collectionCompat,
-      silencerLib,
-      silencerPlugin,
+      munit,
       kindProjectorPlugin,
       betterMonadicForPlugin
     ),
-    libraryDependencies ++= Seq(
-      scalaTest,
-      scalaCheck,
-      scalaTestPlusCheck,
-      scalaCheckShapeless,
-      munit
-    ).map(_ % Test),
     Test / parallelExecution := false,
     // S = Small Stack Traces, D = print Duration
     Test / testOptions += Tests.Argument(TestFrameworks.ScalaTest, "-oSD"),
     // run 100 tests for each property // -s = -minSuccessfulTests
     Test / testOptions += Tests.Argument(TestFrameworks.ScalaCheck, "-s", "100"),
-    testFrameworks += new TestFramework("munit.Framework"),
     initialCommands :=
       s"""|
           |import scala.util.chaining._
@@ -57,7 +45,7 @@ lazy val `exploring-chimney` = (project in file("exploring-chimney"))
     name := "exploring-chimney",
     description := "Exploring Chimney for case class manipulation",
     scalacOptions ++= scalacOptionsFor(scalaVersion.value),
-    console / scalacOptions := removeScalacOptionXlintUnusedForConsoleFrom(scalacOptions.value),
+    // console / scalacOptions := removeScalacOptionXlintUnusedForConsoleFrom(scalacOptions.value),
     libraryDependencies ++= Seq(chimney)
   )
 
@@ -67,22 +55,15 @@ lazy val `exploring-monocle` = (project in file("exploring-monocle"))
     name := "exploring-monocle",
     description := "Exploring optics library Monocle",
     scalacOptions ++= scalacOptionsFor(scalaVersion.value),
-    console / scalacOptions := removeScalacOptionXlintUnusedForConsoleFrom(scalacOptions.value),
+    // console / scalacOptions := removeScalacOptionXlintUnusedForConsoleFrom(scalacOptions.value),
     libraryDependencies ++= Seq(
       monocleMacro,
       monocleLaw,
       monocleUnsafe,
-      alleycatsCore,
       kittensCore,
       scalaCheck,
       scalaCheckShapeless
-    ),
-    libraryDependencies ++= {
-      if (scalaVersion.value.startsWith("2.13"))
-        Seq.empty // in 2.13 we add scalacOption: -Ymacro-annotations // see project/ScalacOptions.scala
-      else
-        Seq(macroParadise)
-    }
+    )
   )
 
 lazy val `exploring-quicklens` = (project in file("exploring-quicklens"))
@@ -91,7 +72,7 @@ lazy val `exploring-quicklens` = (project in file("exploring-quicklens"))
     name := "exploring-quicklens",
     description := "Exploring QuickLencs for case class manipulation",
     scalacOptions ++= scalacOptionsFor(scalaVersion.value),
-    console / scalacOptions := removeScalacOptionXlintUnusedForConsoleFrom(scalacOptions.value),
+    // console / scalacOptions := removeScalacOptionXlintUnusedForConsoleFrom(scalacOptions.value),
     libraryDependencies ++= Seq(quickLens)
   )
 
@@ -101,11 +82,17 @@ lazy val `exploring-diffx` = (project in file("exploring-diffx"))
     name := "exploring-diffx",
     description := "Exploring diffx for case class comparison",
     scalacOptions ++= scalacOptionsFor(scalaVersion.value),
-    console / scalacOptions := removeScalacOptionXlintUnusedForConsoleFrom(scalacOptions.value),
+    // console / scalacOptions := removeScalacOptionXlintUnusedForConsoleFrom(scalacOptions.value),
     libraryDependencies ++= Seq(
       diffxCore,
       diffxScalaTest
-    )
+    ),
+    libraryDependencies ++= Seq(
+      scalaTest,
+      scalaCheck,
+      scalaTestPlusCheck,
+      scalaCheckShapeless
+    ).map(_ % Test)
   )
 
 lazy val compat213 = (project in file("compat213"))
