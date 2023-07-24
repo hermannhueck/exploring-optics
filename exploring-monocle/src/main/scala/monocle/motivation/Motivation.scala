@@ -12,7 +12,7 @@ object Motivation extends util.App {
   val employee = Employee("john", Company("awesome inc", Address("london", Street(23, "high street"))))
 
   employee pipe println
-  println
+  println()
 
   // FORMAT: OFF
   val employee2 = employee.copy(
@@ -37,18 +37,21 @@ object Motivation extends util.App {
   val streetName: Lens[Street, String] = GenLens[Street](_.name)
 
   val composedLens: Lens[Employee, String] =
-    company composeLens address composeLens street composeLens streetName
+    company andThen address andThen street andThen streetName
   composedLens.modify(_.capitalize)(employee) pipe println
 
   import monocle.function.Cons.headOption // to use headOption (an optic from Cons typeclass)
+  import monocle.function.Cons.stringCons
 
+  @annotation.nowarn("cat=deprecation")
   val composedLens2 =
-    company composeLens address composeLens street composeLens streetName composeOptional headOption
+    company andThen address andThen street andThen streetName andThen headOption
   composedLens2.modify(_.toUpper)(employee) pipe println
 
   import monocle.macros.syntax.lens._
 
+  @annotation.nowarn("cat=deprecation")
   val composedLens3 =
-    employee.lens(_.company.address.street.name).composeOptional(headOption)
+    employee.lens(_.company.address.street.name).andThen(headOption)
   composedLens3.modify(_.toUpper) pipe println
 }

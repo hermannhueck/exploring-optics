@@ -18,7 +18,7 @@ object Ex05Traversal extends util.App {
 
   val eachL: Traversal[List[Int], Int] = Traversal.fromTraverse[List, Int]
   // eachL: monocle.Traversal[List[Int],Int] = monocle.PTraversal$$anon$5@70d25509
-  eachL.set(0)(xs) pipe println
+  eachL.replace(0)(xs) pipe println
   // res0: List[Int] = List(0, 0, 0, 0, 0)
   eachL.modify(_ + 1)(xs) pipe println
   // res1: List[Int] = List(2, 3, 4, 5, 6)
@@ -42,22 +42,23 @@ object Ex05Traversal extends util.App {
 
   val points: Traversal[Point, Int] = Traversal.apply2[Point, Int](_.x, _.y)((x, y, p) => p.copy(x = x, y = y))
 
-  points.set(5)(Point("bottom-left", 0, 0)) pipe println
+  points.replace(5)(Point("bottom-left", 0, 0)) pipe println
   // res6: Point = Point(bottom-left,5,5)
 
   s"${line(10)} Custom Traversal with modifyF".green pipe println
 
+  import monocle.Traversal
   import cats.Applicative
   import alleycats.std.map._ // to get Traverse instance for Map (SortedMap does not require this import)
 
   def filterKey[K, V](predicate: K => Boolean): Traversal[Map[K, V], V] =
     new Traversal[Map[K, V], V] {
 
-      def modifyF[F[_]: Applicative](f: V => F[V])(s: Map[K, V]): F[Map[K, V]] =
+      def modifyA[F[_]: Applicative](f: V => F[V])(s: Map[K, V]): F[Map[K, V]] =
         s.map {
           case (k, v) =>
             k -> (if (predicate(k)) f(v) else v.pure[F])
-        }.sequence // sequence requires: alleycats.std.map._
+        }.sequence
     }
 
   val m = Map(1 -> "one", 2 -> "two", 3 -> "three", 4 -> "Four")

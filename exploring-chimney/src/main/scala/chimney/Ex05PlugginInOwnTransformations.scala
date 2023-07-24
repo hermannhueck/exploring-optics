@@ -68,6 +68,7 @@ object Ex05PlugginInOwnTransformations extends util.App {
   case class Foo(x: Option[Foo])
   case class Bar(x: Option[Bar])
 
+  @annotation.nowarn("msg=Implicit resolves to enclosing method")
   implicit def fooToBarTransformer: Transformer[Foo, Bar] =
     Transformer.derive[Foo, Bar] // or Transformer.define[Foo, Bar].buildTransformer
 

@@ -2,6 +2,7 @@ package monocle.examples
 
 import scala.util.chaining._
 
+@annotation.nowarn("cat=deprecation")
 object UniversityApp extends util.App {
 
   case class Lecturer(firstName: String, lastName: String, salary: Int)

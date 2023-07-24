@@ -194,12 +194,12 @@ object QuickLensReadmeExamples extends util.App {
 
   "Re-usable modifications (lenses): Alternate syntax:" pipe printSubTitle
 
-  val modifyStreetName2 = modify[Person](_.address.street.name)
+  val modifyStreetName2 = modifyLens[Person](_.address.street.name)
 
   modifyStreetName2.using(_.toUpperCase)(person) pipe println
   modifyStreetName2.using(_.toLowerCase)(person) pipe println
 
-  val upperCaseStreetName2 = modify[Person](_.address.street.name).using(_.toUpperCase)
+  val upperCaseStreetName2 = modifyLens[Person](_.address.street.name).using(_.toUpperCase)
 
   upperCaseStreetName2(person) pipe println
 
@@ -213,8 +213,8 @@ object QuickLensReadmeExamples extends util.App {
 
   "or, with alternate syntax:" pipe printSubTitle
 
-  val modifyAddress4    = modify[Person](_.address)
-  val modifyStreetName4 = modify[Address](_.street.name)
+  val modifyAddress4    = modifyLens[Person](_.address)
+  val modifyStreetName4 = modifyLens[Address](_.street.name)
 
   (modifyAddress4 andThenModify modifyStreetName4)
     .using(_.toUpperCase)(person) pipe println

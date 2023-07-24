@@ -48,11 +48,11 @@ object Ex03Prism extends util.App {
 
   s"${line(10)} Prism: set and modify".green pipe println
 
-  jStr.set("Bar")(JStr("Hello")) pipe println        // JStr("Bar")
+  jStr.replace("Bar")(JStr("Hello")) pipe println    // JStr("Bar")
   jStr.modify(_.reverse)(JStr("Hello")) pipe println // JStr("olleH")
 
   // If we supply another type of Json, set and modify will be a no operation:
-  jStr.set("Bar")(JNum(10)) pipe println        // JNum(10)
+  jStr.replace("Bar")(JNum(10)) pipe println    // JNum(10)
   jStr.modify(_.reverse)(JNum(10)) pipe println // JNum(10)
 
   // If we care about the success or failure of the update, we can use setOption or modifyOption:
@@ -65,7 +65,7 @@ object Ex03Prism extends util.App {
 
   val jNum: Prism[Json, Double] = Prism.partial[Json, Double] { case JNum(v) => v }(JNum)
 
-  val jInt: Prism[Json, Int] = jNum composePrism doubleToInt
+  val jInt: Prism[Json, Int] = jNum andThen doubleToInt
 
   jInt(5) pipe println                       // JNum(5.0)
   jInt.getOption(JNum(5.0)) pipe println     // Some(5)
@@ -83,8 +83,8 @@ object Ex03Prism extends util.App {
 
   import monocle.macros.GenIso
 
-  val jNum2: Prism[Json, Double] = GenPrism[Json, JNum] composeIso GenIso[JNum, Double]
-  val jNull: Prism[Json, Unit]   = GenPrism[Json, JNull.type] composeIso GenIso.unit[JNull.type]
+  val jNum2: Prism[Json, Double] = GenPrism[Json, JNum] andThen GenIso[JNum, Double]
+  val jNull: Prism[Json, Unit]   = GenPrism[Json, JNull.type] andThen GenIso.unit[JNull.type]
 
   jNum2.getOption(JNum(4.5)) pipe println     // Some(4.5)
   jNum2.getOption(JStr("Hello")) pipe println // None

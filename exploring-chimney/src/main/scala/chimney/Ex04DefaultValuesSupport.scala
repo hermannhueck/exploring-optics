@@ -17,7 +17,9 @@ object Ex04DefaultValuesSupport extends util.App {
 
   val steve =
     stevie
-      .transformInto[Butterfly]
+      .into[Butterfly]
+      .enableDefaultValues
+      .transform
       .tap(println)
 
   stevie

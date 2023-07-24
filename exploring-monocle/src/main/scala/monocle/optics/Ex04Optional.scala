@@ -41,10 +41,10 @@ object Ex04Optional extends util.App {
 
   s"${line(10)} getOption, set".green pipe println
 
-  head.getOption(xs) pipe println // Some(1)
-  head.set(5)(xs) pipe println    // List(5, 2, 3)
-  head.getOption(ys) pipe println // None
-  head.set(5)(ys) pipe println    // List()
+  head.getOption(xs) pipe println  // Some(1)
+  head.replace(5)(xs) pipe println // List(5, 2, 3)
+  head.getOption(ys) pipe println  // None
+  head.replace(5)(ys) pipe println // List()
 
   s"${line(10)} modify".green pipe println
 

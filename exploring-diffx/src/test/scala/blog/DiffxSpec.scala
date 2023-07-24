@@ -1,6 +1,8 @@
 package blog
 
 import com.softwaremill.diffx.scalatest.DiffMatcher
+import com.softwaremill.diffx.generic.auto._
+
 import com.softwaremill.diffx._
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -12,6 +14,7 @@ case class Family(people: List[Person])
   See also:
   https://blog.softwaremill.com/human-readable-case-class-diffs-c707e83e08a2
  */
+@annotation.nowarn("cat=deprecation")
 class DiffxSpec extends TestSpec with DiffMatcher {
 
   "2 Persons with name Mike" should "not match" in {
@@ -23,10 +26,10 @@ class DiffxSpec extends TestSpec with DiffMatcher {
 
     import scala.language.implicitConversions
 
+    @annotation.nowarn("msg=never used")
     implicit def diffForLocalDate(difForString: Diff[String]): Diff[LocalDate] =
       new Diff[LocalDate] {
-
-        override def apply(left: LocalDate, right: LocalDate, toIgnore: List[FieldPath]): DiffResult = {
+        override def apply(left: LocalDate, right: LocalDate, context: DiffContext): DiffResult = {
           val formatter = DateTimeFormatter.ISO_DATE
           difForString.apply(formatter.format(left), formatter.format(right))
         }
@@ -50,6 +53,7 @@ class DiffxSpec extends TestSpec with DiffMatcher {
     implicit val om: ObjectMatcher[Person] =
       (left: Person, right: Person) => left.name == right.name
 
+    @annotation.nowarn("msg=never used")
     implicit val dd: Derived[Diff[List[Person]]] =
       new Derived(Diff[Set[Person]].contramap(_.toSet))
 
@@ -58,7 +62,10 @@ class DiffxSpec extends TestSpec with DiffMatcher {
 
   "2 Persons with name Mike" should "match when ignoring the age" in {
 
-    implicit val modifiedDiff: Diff[Person] = Derived[Diff[Person]].ignore(_.age)
+    implicit val modifiedDiff: Diff[Person] =
+      Diff
+        .derived[Person]
+        .ignore(_.age)
 
     Person(11, "Mike") should matchTo(Person(12, "Mike"))
   }

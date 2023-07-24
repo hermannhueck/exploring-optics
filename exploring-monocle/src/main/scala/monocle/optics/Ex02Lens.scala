@@ -24,9 +24,9 @@ object Ex02Lens extends util.App {
   val lensStreetNumber: Lens[Address, Int] =
     Lens[Address, Int](_.streetNumber)(n => a => a.copy(streetNumber = n))
 
-  println
+  println()
   lensStreetNumber.get(address) pipe println
-  lensStreetNumber.set(5)(address) pipe println
+  lensStreetNumber.replace(5)(address) pipe println
 
   s"${line(10)} macro-generated street number lens".green pipe println
 
@@ -36,12 +36,12 @@ object Ex02Lens extends util.App {
     GenLens[Address](_.streetNumber)
 
   lensStreetNumber2.get(address) pipe println
-  lensStreetNumber2.set(5)(address) pipe println
+  lensStreetNumber2.replace(5)(address) pipe println
 
   s"${line(10)} lens.modify".green pipe println
 
   val n = lensStreetNumber2.get(address) tap println
-  lensStreetNumber2.set(n + 1)(address) pipe println
+  lensStreetNumber2.replace(n + 1)(address) pipe println
   // modify is the same as get followed by set
   lensStreetNumber2.modify(_ + 1)(address) pipe println
 
@@ -72,17 +72,17 @@ object Ex02Lens extends util.App {
 
   val lensAddress: Lens[Person, Address] = GenLens[Person](_.address)
 
-  (lensAddress composeLens lensStreetNumber2).get(john) pipe println
-  (lensAddress composeLens lensStreetNumber2).set(2)(john) pipe println
+  (lensAddress andThen lensStreetNumber2).get(john) pipe println
+  (lensAddress andThen lensStreetNumber2).replace(2)(john) pipe println
 
   s"${line(10)} other ways of lens composition".green pipe println
 
-  val lensJohnToMike: Person => Person = GenLens[Person](_.name).set("Mike") compose
+  val lensJohnToMike: Person => Person = GenLens[Person](_.name).replace("Mike") compose
     GenLens[Person](_.age).modify(_ + 1)
   john pipe lensJohnToMike pipe println
 
   import monocle.macros.syntax.lens._
-  john.lens(_.name).set("Mike").lens(_.age).modify(_ + 1) pipe println
+  john.lens(_.name).replace("Mike").lens(_.age).modify(_ + 1) pipe println
 
   s"${line(10)} composing prism with lens".green pipe println
 
@@ -94,13 +94,14 @@ object Ex02Lens extends util.App {
   val c = GenLens[B](_.c)
   val b = GenLens[A](_.b)
 
-  (b composePrism some composeLens c).getOption(A(Some(B(1)))) pipe println
+  // (b composePrism some composeLens c).getOption(A(Some(B(1)))) pipe println
+  b.some.andThen(c).getOption(A(Some(B(1)))) pipe println
 
   s"${line(10)} lens generation".green pipe println
 
   val ageLens = GenLens[Person](_.age)
   ageLens.modify(_ + 10)(john) tap println
-  GenLens[Person](_.address.streetName).set("Iffley Road")(john) pipe println
+  GenLens[Person](_.address.streetName).replace("Iffley Road")(john) pipe println
 
   s"${line(10)} @Lenses macro annotation".green pipe println
 
@@ -110,7 +111,7 @@ object Ex02Lens extends util.App {
 
   Point.x.get(p) pipe println
   Point.y.get(p) pipe println
-  Point.y.set(0)(p) pipe println
+  Point.y.replace(0)(p) pipe println
 
   @Lenses("_") case class Point2(x: Int, y: Int)
   val p2 = Point2(5, 3)
@@ -128,7 +129,7 @@ object Ex02Lens extends util.App {
   checkRules(LensTests(lensStreetNumber2).all, "Lens", "lensStreetNumber2")
   checkRules(LensTests(lensAddress).all, "Lens", "lensAddress")
   checkRules(
-    LensTests((lensAddress composeLens lensStreetNumber2)).all,
+    LensTests((lensAddress andThen lensStreetNumber2)).all,
     "Lens",
     "(lensAddress composeLens lensStreetNumber2)"
   )

@@ -11,8 +11,13 @@ object UnsafeModule extends util.App {
 
   import monocle.unsafe.UnsafeSelect
   import monocle.macros.GenLens
+  import monocle.Optional
 
-  val unsafe = (UnsafeSelect.unsafeSelect[Person](_.age >= 18) composeLens
+  // deprecated:
+  // val unsafe = (UnsafeSelect.unsafeSelect[Person](_.age >= 18) composeLens
+  //   GenLens[Person](_.name)).modify("Adult: " + _)
+  // replace with:
+  val unsafe = (Optional.filter[Person](_.age >= 18) andThen
     GenLens[Person](_.name)).modify("Adult: " + _)
 
   unsafe(john) pipe println
@@ -22,8 +27,12 @@ object UnsafeModule extends util.App {
   // if a Lens is then used to change one of the values used in the predicates.
   // For example:
 
-  val unsafe2 = (UnsafeSelect.unsafeSelect[Person](_.age >= 18) composeLens
-    GenLens[Person](_.age)).set(0)
+  // deprecated:
+  // val unsafe2 = (UnsafeSelect.unsafeSelect[Person](_.age >= 18) composeLens
+  //   GenLens[Person](_.age)).set(0)
+  // replace with:
+  val unsafe2 = (Optional.filter[Person](_.age >= 18) andThen
+    GenLens[Person](_.age)).replace(0)
 
   unsafe2(john) pipe println
 }

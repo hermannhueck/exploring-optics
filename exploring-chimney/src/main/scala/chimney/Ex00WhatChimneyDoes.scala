@@ -10,7 +10,7 @@ object Ex00WhatChimneyDoes extends util.App {
   case class MakeCoffee(id: Int, kind: String, addict: String)
   case class CoffeeMade(id: Int, kind: String, forAddict: String, at: ZonedDateTime)
 
-  val command = MakeCoffee(id = Random.nextInt, kind = "Espresso", addict = "Piotr") tap println
+  val command = MakeCoffee(id = Random.nextInt(), kind = "Espresso", addict = "Piotr") tap println
 
   val event = CoffeeMade(id = command.id, kind = command.kind, forAddict = command.addict, at = ZonedDateTime.now) tap println
 

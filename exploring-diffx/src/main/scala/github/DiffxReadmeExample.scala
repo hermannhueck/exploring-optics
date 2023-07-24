@@ -33,7 +33,9 @@ object DiffxReadmeExample extends util.App {
     //   Some(Foo(Bar("asdf", 5), List(123, 1234), Some(Bar("asdf", 5))))
     // )
 
+    import com.softwaremill.diffx.generic.auto._
     import com.softwaremill.diffx._
+
     compare(left, right) pipe println
 
   }
@@ -48,12 +50,14 @@ object DiffxReadmeExample extends util.App {
 
   {
     s"${line(10)} diffing a1 and a2:".green pipe println
-    Diff[Parent]
+    Diff
+      .derived[Parent]
       .apply(a1, a2)
       .ensuring(!_.isIdentical) pipe println
 
     s"${line(10)} diffing a1 and b1:".green pipe println
-    Diff[Parent]
+    Diff
+      .derived[Parent]
       .apply(a1, b1)
       .ensuring(!_.isIdentical) pipe println
   }
@@ -61,8 +65,11 @@ object DiffxReadmeExample extends util.App {
   {
     s"${line(10)} diffing a1 and a2, ignoring field 'id':".green pipe println
     @annotation.nowarn("msg=never used")
-    implicit val diffA: Derived[Diff[A]] = Derived(Diff.gen[A].value.ignore((x: A) => x.id))
-    Diff[Parent]
+    // implicit val diffA: Derived[Diff[A]] = Derived(Diff.gen[A].value.ignore((x: A) => x.id))
+    implicit val diffA: Diff[A] =
+      Diff.derived[A].ignore((x: A) => x.id)
+    Diff
+      .derived[Parent]
       .apply(a1, a2)
       .ensuring(_.isIdentical) pipe println
   }
