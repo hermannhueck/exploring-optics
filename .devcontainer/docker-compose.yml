@@ -1,0 +1,10 @@
+version: "3.9"
+
+services:
+  scaladev-container:
+    image:
+      hermannhueck/ubuntu-for-scaladev:with-scala-tools
+    volumes:
+      - ~/scaladev-projects:/home/scaladev/projects
+    ports:
+      - "2222:22"
